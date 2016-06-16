@@ -26,8 +26,8 @@ class rnOne extends Component {
 	   <Image source={{uri: movie.posters.thumbnail}} style={styles.thumbnail}/>
 
      	   <View style={styles.rightContainer}>
-	     <Text>{movie.title}</Text>
-	     <Text>{movie.year}</Text>
+	     <Text style={styles.title}>{movie.title}</Text>
+	     <Text style={styles.year}>{movie.year}</Text>
 		
 	   </View>
 
@@ -45,6 +45,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+   title: {
+     fontSize: 20,
+     marginBottom: 8,
+     textAlign: 'center',
+   },
+  year: {
+    textAlign: 'center',
   },
   welcome: {
     fontSize: 20,
