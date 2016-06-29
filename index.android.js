@@ -9,16 +9,67 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  ListView,
 } from 'react-native';
 
 var MOVIES_DATA = [
   {title:'title',year:'2015',posters:{thumbnail:'http://i.imgur.com/UePbdph.jpg'}},
 ];
+var REQUEST_URL = "https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json";
+
 
 class rnOne extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      movie:null,
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1,row2) => row1 !== row2,
+      }),
+      loaded: false,  
+    };
+  }
+
+  componentDidMount(){
+    this.fetchData();
+  }
+  
+  fetchData() {
+    fetch(REQUEST_URL)
+	.then((response) => response.json())
+	.then((responseData) => {
+	  this.setState({
+	    dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+	    loaded:true,
+	    movies: responseData.movies,
+	  });
+	})
+	.done();
+  }
+
   render() {
-	var movie = MOVIES_DATA[0];
+
+	if(!this.state.movies){
+    	  return this.renderLoadingView();
+	}
+	var movie = this.state.movies[0];
+	return this.renderMovie(movie);
+  }
+	
+	renderLoadingView(){
+	  return (
+	    <View style={styles.container}>
+	      <Text>
+		正在加载数据。。。。。
+	      </Text>
+	    </View>
+ 	  );
+	}
+
+	//var movie = MOVIES_DATA[0];
+   renderMovie(movie){
     return (
 
    	 <View style={styles.container}>
@@ -35,7 +86,7 @@ class rnOne extends Component {
  
       
     );
-  }
+   }
 }
 
 const styles = StyleSheet.create({
