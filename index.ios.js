@@ -30,9 +30,12 @@ class rnOne extends Component {
       }),
       loaded: false,  
     };
+      
+      //this.fetchData = this.fetchData.bind(this);
+      
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.fetchData();
   }
   
@@ -59,7 +62,9 @@ class rnOne extends Component {
 	//return this.renderMovie(movie);
 	return (
 	  <ListView
-	    dataSource={this.state.}
+            dataSource={this.state.dataSource}
+            renderRow={this.renderMovie}
+            style={styles.ListView}
 	  />
 	);
   }
@@ -68,7 +73,7 @@ class rnOne extends Component {
 	  return (
 	    <View style={styles.container}>
 	      <Text>
-		正在加载数据。。。。。
+              正在加载数据。。。。。
 	      </Text>
 	    </View>
  	  );
@@ -82,7 +87,7 @@ class rnOne extends Component {
  	   
 	   <Image source={{uri: movie.posters.thumbnail}} style={styles.thumbnail}/>
 
-     	   <View style={styles.rightContainer}>
+       <View style={styles.rightContainer}>
 	     <Text style={styles.title}>{movie.title}</Text>
 	     <Text style={styles.year}>{movie.year}</Text>
 		
